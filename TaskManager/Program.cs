@@ -1,13 +1,23 @@
+using NLog.Web;
 using TaskManager.Abstractions.Services;
 using TaskManager.DataAccess.Extensions;
+using TaskManager.Identity.Extensions;
 using TaskManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
+builder.Services.AddLogging();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddIdentity(builder.Configuration);
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext(builder.Configuration);
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
 var app = builder.Build();

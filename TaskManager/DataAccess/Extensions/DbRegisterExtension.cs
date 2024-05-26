@@ -4,7 +4,7 @@ using TaskManager.DataAccess.Repositories;
 
 namespace TaskManager.DataAccess.Extensions
 {
-    public static class DbRegisterExtensions
+    public static class DbRegisterExtension
     {
         public static IServiceCollection AddDbContext(this IServiceCollection serviceCollection,
         IConfiguration configuration)

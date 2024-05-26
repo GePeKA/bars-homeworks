@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TaskManager.Abstractions.Services;
 using TaskManager.Dtos;
 
@@ -15,12 +16,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize]
         public async Task<IActionResult> AddTask(TaskDto dto)
         {
             return Ok(await taskService.AddTaskAsync(dto));
         }
 
         [HttpPut("{id:long}/update")]
+        [Authorize(Roles="admin")]
         public async Task<IActionResult> UpdateTask([FromRoute] long id, [FromBody] TaskDto dto)
         {
             return Ok(await taskService.UpdateTaskAsync(id, dto));
